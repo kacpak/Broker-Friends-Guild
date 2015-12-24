@@ -1,0 +1,17 @@
+## Interface: 60200
+## Title: Broker Friends / Guild
+## Notes: Friemds and Guild information plugin for LibDataBroker displays
+## Author: kacpak
+## Version: v1.0
+
+## X-License: Apache 2.0
+## X-Category: Miscellaneous
+
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+
+Broker_kacpakFriends.lua
