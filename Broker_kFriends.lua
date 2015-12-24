@@ -2,8 +2,8 @@ local db
 local playerName, playerRealm = UnitName("player"), GetRealmName()
 
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
-local dataobj = ldb:GetDataObjectByName("Friends") or ldb:NewDataObject("Friends", {
-	type = "data source", icon = [[Interface\Icons\Inv_cask_04]], text = "0/0",
+local dataobj = ldb:GetDataObjectByName("kFriends") or ldb:NewDataObject("kFriends", {
+	type = "data source", icon = [[Interface\Icons\Inv_cask_04]], text = "All alone",
 	OnClick = function(self, button)
 		if button == "RightButton" then
 			ToggleGuildFrame()
@@ -13,6 +13,12 @@ local dataobj = ldb:GetDataObjectByName("Friends") or ldb:NewDataObject("Friends
 		else
 			ToggleFriendsFrame(1)
 		end
+	end,
+	OnTooltipShow = function(tip)
+		tip:AddLine("Friends & Guildmates")
+		tip:AddLine(" ")
+		tip:AddLine("|cff69ccf0Left Click|cffffd200 to toggle Friends List|r")
+		tip:AddLine("|cff69ccf0Right Click|cffffd200 to toggle Roster|r")	
 	end,
 })
 

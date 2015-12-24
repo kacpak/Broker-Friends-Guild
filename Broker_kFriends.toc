@@ -1,8 +1,8 @@
 ## Interface: 60200
-## Title: Broker Friends / Guild
-## Notes: Friemds and Guild information plugin for LibDataBroker displays
-## Author: kacpak
-## Version: v1.0
+## Title: Broker |cff69ccf0k|cffe1a500Friends&Guild|r
+## Notes: Shows how many online friends and guildmates there are
+## Author: Mateusz Kasprzak
+## Version: 1.1
 
 ## X-License: Apache 2.0
 ## X-Category: Miscellaneous
@@ -14,4 +14,4 @@ libs\LibStub.lua
 libs\CallbackHandler-1.0.lua
 libs\LibDataBroker-1.1.lua
 
-Broker_kacpakFriends.lua
+Broker_kFriends.lua
