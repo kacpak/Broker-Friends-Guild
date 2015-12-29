@@ -1,4 +1,22 @@
-local db
+--[[
+Name: Broker kFriends
+Description: Shows how many online friends and guildmates there are
+
+Copyright 2008 Quaiche of Dragonblight
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+]]
+
 local playerName, playerRealm = UnitName("player"), GetRealmName()
 
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
@@ -7,7 +25,7 @@ local dataobj = ldb:GetDataObjectByName("kFriends") or ldb:NewDataObject("kFrien
 	OnClick = function(self, button)
 		if button == "RightButton" then
 			ToggleGuildFrame()
-			if ( IsInGuild() ) then
+			if (IsInGuild()) then
 				GuildFrameTab2:Click()
 			end
 		else
@@ -22,26 +40,30 @@ local dataobj = ldb:GetDataObjectByName("kFriends") or ldb:NewDataObject("kFrien
 	end,
 })
 
-local function UpdateText()
+local function OnEvent(self, event, addonName, ...)
+	--if (event == "ADDON_LOADED" and addonName ~= "Broker_kFriends") then
+	--	return
+	--end
+
 	friendsOn, guildOn = 0, 0
 	for i = 1, GetNumFriends() do
-		local name, lvl, class, area, online, status, note = GetFriendInfo(i)
-		if ( online ) then
+		local _, _, _, _, online, _, _ = GetFriendInfo(i)
+		if (online) then
 			friendsOn = friendsOn + 1
 		end
 	end
 	
 	for j = 1, BNGetNumFriends() do
-		local BNid, BNname, battleTag, _, toonname, toonid, client, online, lastonline, isafk, isdnd, broadcast, note = BNGetFriendInfo(j)
-		if ( online ) then
+		local _, _, _, _, _, _, _, online, _, _, _, _, _ = BNGetFriendInfo(j)
+		if (online) then
 			friendsOn = friendsOn + 1
 		end
 	end
 	
-	if ( IsInGuild() ) then		
+	if (IsInGuild()) then		
 		for i = 0, select(1, GetNumGuildMembers()) do
-			local name, rank, rankIndex, level, class, zone, note, officernote, online, status, classFileName, achievementPoints, achievementRank, isMobile, canSoR = GetGuildRosterInfo(i)
-			if ( online ) then
+			local _, _, _, _, _, _, _, _, online, _, _, _, _, _, _ = GetGuildRosterInfo(i)
+			if (online) then
 				guildOn = guildOn + 1
 			end
 		end
@@ -53,18 +75,10 @@ local function UpdateText()
 end
 
 local f = CreateFrame("Frame")
-f:SetScript("OnEvent", function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
-f:RegisterEvent("ADDON_LOADED")
-f.ADDON_LOADED = UpdateText
+f:SetScript("OnEvent", OnEvent)
 f:RegisterEvent("PLAYER_LOGIN")
-f.PLAYER_LOGIN = UpdateText
 f:RegisterEvent("FRIENDLIST_UPDATE")
-f.FRIENDLIST_UPDATE = UpdateText
 f:RegisterEvent("BN_FRIEND_ACCOUNT_ONLINE")
-f.BN_FRIEND_ACCOUNT_ONLINE = UpdateText
 f:RegisterEvent("BN_FRIEND_ACCOUNT_OFFLINE")
-f.BN_FRIEND_ACCOUNT_OFFLINE = UpdateText
 f:RegisterEvent("GUILD_ROSTER_UPDATE")
-f.GUILD_ROSTER_UPDATE = UpdateText
 f:RegisterEvent("PLAYER_GUILD_UPDATE")
-f.PLAYER_GUILD_UPDATE = UpdateText

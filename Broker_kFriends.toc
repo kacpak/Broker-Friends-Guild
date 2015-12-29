@@ -2,7 +2,7 @@
 ## Title: Broker |cff69ccf0k|cffe1a500Friends&Guild|r
 ## Notes: Shows how many online friends and guildmates there are
 ## Author: Mateusz Kasprzak
-## Version: 1.1
+## Version: 1.1.1
 
 ## X-License: Apache 2.0
 ## X-Category: Miscellaneous
